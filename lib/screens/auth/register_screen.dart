@@ -20,6 +20,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoading = false;
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
+  bool _passwordTouched = false;
+  bool _confirmTouched = false;
 
   @override
   void dispose() {
@@ -88,9 +90,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           () => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  obscureText: _obscurePassword,
+                  obscureText: _obscurePassword && _passwordTouched,
                   keyboardType: TextInputType.visiblePassword,
                   textInputAction: TextInputAction.next,
+                  onChanged: (_) {
+                    if (!_passwordTouched) {
+                      setState(() => _passwordTouched = true);
+                    }
+                  },
                   validator: (v) {
                     if (v?.isEmpty == true) return 'Requerido';
                     if (v!.length < 6) return 'Mínimo 6 caracteres';
@@ -111,9 +118,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           () => _obscureConfirm = !_obscureConfirm),
                     ),
                   ),
-                  obscureText: _obscureConfirm,
+                  obscureText: _obscureConfirm && _confirmTouched,
                   keyboardType: TextInputType.visiblePassword,
                   textInputAction: TextInputAction.done,
+                  onChanged: (_) {
+                    if (!_confirmTouched) {
+                      setState(() => _confirmTouched = true);
+                    }
+                  },
                   validator: (v) {
                     if (v != _passwordCtrl.text) return 'No coinciden';
                     return null;
