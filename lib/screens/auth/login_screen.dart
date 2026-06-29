@@ -87,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     obscureText: _obscurePassword,
+                    enableSuggestions: false,
                     validator: (v) =>
                         v?.isEmpty == true ? 'Requerido' : null,
                   ),

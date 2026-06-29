@@ -73,7 +73,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  key: Key('password'),
                   controller: _passwordCtrl,
                   decoration: InputDecoration(
                     labelText: 'Contraseña',
@@ -87,6 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   obscureText: _obscurePassword,
+                  enableSuggestions: false,
                   validator: (v) {
                     if (v?.isEmpty == true) return 'Requerido';
                     if (v!.length < 6) return 'Mínimo 6 caracteres';
@@ -108,6 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   obscureText: _obscureConfirm,
+                  enableSuggestions: false,
                   validator: (v) {
                     if (v != _passwordCtrl.text) return 'No coinciden';
                     return null;
