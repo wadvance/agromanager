@@ -7,8 +7,8 @@ allprojects {
 
 subprojects {
     plugins.withId("com.android.library") {
-        afterEvaluate {
-            android.compileSdk = 36
+        android {
+            compileSdkVersion(36)
         }
     }
 }
