@@ -6,9 +6,9 @@ allprojects {
 }
 
 subprojects {
-    plugins.withId("com.android.library") {
-        android {
-            compileSdkVersion(36)
+    project.plugins.withId("com.android.library") {
+        project.extensions.configure<com.android.build.api.dsl.LibraryExtension> {
+            compileSdk = 36
         }
     }
 }
