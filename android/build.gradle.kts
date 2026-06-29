@@ -6,11 +6,9 @@ allprojects {
 }
 
 subprojects {
-    afterEvaluate {
-        if (project.hasProperty("android")) {
-            android {
-                compileSdk = 36
-            }
+    plugins.withId("com.android.library") {
+        afterEvaluate {
+            android.compileSdk = 36
         }
     }
 }
