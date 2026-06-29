@@ -87,7 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     obscureText: _obscurePassword,
+                    keyboardType: TextInputType.visiblePassword,
                     enableSuggestions: false,
+                    autofillHints: [],
                     validator: (v) =>
                         v?.isEmpty == true ? 'Requerido' : null,
                   ),
