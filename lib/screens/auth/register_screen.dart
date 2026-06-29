@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../providers/app_provider.dart';
 import '../../services/firebase_service.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -162,7 +164,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _passwordCtrl.text,
         _nameCtrl.text.trim(),
       );
-      if (mounted) Navigator.pop(context);
+      if (mounted) {
+        context.read<AppProvider>().setLoggedIn(true);
+      }
     } on FirebaseAuthException catch (e) {
       String msg = 'Error al registrarse';
       if (e.code == 'email-already-in-use') {

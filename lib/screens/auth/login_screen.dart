@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../providers/app_provider.dart';
 import '../../services/firebase_service.dart';
 import 'register_screen.dart';
 
@@ -88,8 +90,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     obscureText: _obscurePassword,
                     keyboardType: TextInputType.visiblePassword,
-                    enableSuggestions: false,
-                    autofillHints: [],
                     validator: (v) =>
                         v?.isEmpty == true ? 'Requerido' : null,
                   ),
@@ -150,6 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailCtrl.text.trim(),
         _passwordCtrl.text,
       );
+      if (mounted) {
+        context.read<AppProvider>().setLoggedIn(true);
+      }
     } on FirebaseAuthException catch (e) {
       String msg = 'Error al iniciar sesión';
       if (e.code == 'user-not-found') {
