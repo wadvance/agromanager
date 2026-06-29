@@ -65,7 +65,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     prefixIcon: Icon(Icons.email),
                   ),
                   keyboardType: TextInputType.emailAddress,
-                  autofillHints: [AutofillHints.email],
                   validator: (v) {
                     if (v?.isEmpty == true) return 'Requerido';
                     if (!v!.contains('@')) return 'Correo inválido';
@@ -88,7 +87,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   obscureText: _obscurePassword,
-                  autofillHints: [AutofillHints.newPassword],
                   validator: (v) {
                     if (v?.isEmpty == true) return 'Requerido';
                     if (v!.length < 6) return 'Mínimo 6 caracteres';
@@ -97,7 +95,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  key: Key('confirmPassword'),
                   controller: _confirmCtrl,
                   decoration: InputDecoration(
                     labelText: 'Confirmar contraseña',
@@ -111,7 +108,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   obscureText: _obscureConfirm,
-                  autofillHints: [AutofillHints.password],
                   validator: (v) {
                     if (v != _passwordCtrl.text) return 'No coinciden';
                     return null;
