@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
   bool _isLoading = false;
+  bool _isResetting = false;
   bool _obscurePassword = true;
 
   @override
@@ -97,8 +98,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => _resetPassword(),
-                      child: Text('¿Olvidaste tu contraseña?'),
+                      onPressed: _isResetting ? null : _resetPassword,
+                      child: _isResetting
+                          ? SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                  strokeWidth: 2),
+                            )
+                          : Text('¿Olvidaste tu contraseña?'),
                     ),
                   ),
                   SizedBox(height: 16),
@@ -181,24 +189,33 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _resetPassword() async {
     final email = _emailCtrl.text.trim();
     if (email.isEmpty) {
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Ingresa tu correo primero')),
       );
       return;
     }
+    setState(() => _isResetting = true);
     try {
       await FirebaseService.resetPassword(email);
       if (mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Correo de recuperación enviado')),
+          SnackBar(
+            content: Text('Correo de recuperación enviado'),
+            duration: Duration(seconds: 5),
+          ),
         );
       }
     } catch (e) {
       if (mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: $e')),
         );
       }
+    } finally {
+      if (mounted) setState(() => _isResetting = false);
     }
   }
 }
