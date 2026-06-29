@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../providers/app_provider.dart';
 import '../../services/firebase_service.dart';
 import 'register_screen.dart';
 
@@ -130,14 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text('Regístrate'),
                       ),
                     ],
-                  ),
-                  SizedBox(height: 16),
-                  TextButton.icon(
-                    onPressed: () {
-                      context.read<AppProvider>().skipLogin();
-                    },
-                    icon: Icon(Icons.skip_next),
-                    label: Text('Continuar sin cuenta'),
                   ),
                 ],
               ),
