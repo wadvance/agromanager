@@ -66,6 +66,7 @@ class AppProvider extends ChangeNotifier {
     _isLoggedIn = value;
     if (value) {
       _loadUserRole();
+      loadAll();
     }
     notifyListeners();
   }
@@ -106,8 +107,22 @@ class AppProvider extends ChangeNotifier {
       _inventory = await DatabaseService.getInventoryItems();
       _finances = await DatabaseService.getFinanceRecords();
       _tasks = await DatabaseService.getTasks();
+      _dashboardSummary = {
+        'totalCrops': 0.0,
+        'totalLivestock': 0.0,
+        'pendingTasks': 0.0,
+        'lowStockItems': 0.0,
+        'inventoryValue': 0.0,
+      };
     } catch (e) {
       _error = 'Error al cargar datos: $e';
+      _dashboardSummary = {
+        'totalCrops': 0.0,
+        'totalLivestock': 0.0,
+        'pendingTasks': 0.0,
+        'lowStockItems': 0.0,
+        'inventoryValue': 0.0,
+      };
     }
 
     _isLoading = false;
